@@ -96,6 +96,10 @@ class Player(pyg.sprite.Sprite):
         else:
             p1.isStatic = False
             p1.image.fill((255, 255, 255))
+
+        if self.rect.collideobjects(mosts.sprites()):
+            self.Health -= 1
+        # test
         if ks[K_EQUALS]:
             self.Health += 1
         elif ks[K_MINUS]:
@@ -117,6 +121,7 @@ class Player(pyg.sprite.Sprite):
             self.rect.left = 0
         if self.rect.right > WIDTH:
             self.rect.right = WIDTH
+
         self.set_health_rect()
 
 
