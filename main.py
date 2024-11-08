@@ -1,5 +1,4 @@
 from typing import Tuple
-import pygame
 import pygame as pyg
 from pygame import *
 import math as mth
