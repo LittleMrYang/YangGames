@@ -183,4 +183,5 @@ while running:
         mosts.update()
     pyg.display.flip()
     clockc.tick(FPS)
+
 pyg.quit()
