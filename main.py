@@ -75,7 +75,7 @@ class Player(Basic_role):
         self.image.fill(color)
         self.rect: Rect = self.image.get_rect()
         self.MaxHealth = 20
-        self.Health = 2
+        self.Health = 10
         self.hlthRct.fill((0, 0, 0))
 
     def isOnGround(self) -> bool:
