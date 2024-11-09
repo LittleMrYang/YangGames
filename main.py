@@ -19,19 +19,21 @@ xyd = transform.scale(xyd, (100, 100))
 
 
 class Button:
+
     def __init__(self, size: int, _text: str, _font: str) -> None:
         self.ft = font.SysFont(_font, size)
         self.image: Surface = self.ft.render(_text, True, "white", "black")
         self.rect = self.image.get_rect()
 
 
-class Basic_role(pyg.sprite.Sprite):
+class Monster(pyg.sprite.Sprite):
     MaxHealth: int
     Health: int
     hlthRct = Surface((60, 3))
 
     def __init__(self, image: Surface):
-        self.image: Surface = image
+        sprite.Sprite.__init__(self)
+        self.image = image
         self.rect = self.image.get_rect()
         self.MaxHealth = 20
         self.Health = self.MaxHealth
@@ -45,19 +47,6 @@ class Basic_role(pyg.sprite.Sprite):
         dst.blit(self.hlthRct, (self.rect.centerx -
                                 self.hlthRct.get_rect().width*0.33, self.rect.top-self.rect.height*0.2))
 
-    # def update(self):
-    #     self.set_health_rect()
-
-
-class Monster(Basic_role):
-
-    def __init__(self, image: Surface):
-        sprite.Sprite.__init__(self)
-        self.image = image
-        self.rect = self.image.get_rect()
-        self.MaxHealth = 20
-        self.Health = self.MaxHealth
-
     def update(self):
         self.rect.centerx += (p1.rect.centerx-self.rect.centerx)/50
         self.rect.centery += \
@@ -65,7 +54,10 @@ class Monster(Basic_role):
         self.set_health_rect()
 
 
-class Player(Basic_role):
+class Player(pyg.sprite.Sprite):
+    MaxHealth: int
+    Health: int
+    hlthRct = Surface((60, 3))
     accr = 0
     isStatic = False
 
@@ -75,11 +67,19 @@ class Player(Basic_role):
         self.image.fill(color)
         self.rect: Rect = self.image.get_rect()
         self.MaxHealth = 20
-        self.Health = 10
-        self.hlthRct.fill((0, 0, 0))
+        self.Health = self.MaxHealth
 
     def isOnGround(self) -> bool:
         return self.rect.y == HEIGHT-self.rect.height
+
+    def set_health_rect(self):
+        self.hlthRct.fill((0, 0, 0))
+        self.hlthRct.fill((255-self.Health/self.MaxHealth*255, 220, 30), rect.Rect(
+            0, 0, self.Health/self.MaxHealth*self.hlthRct.get_rect().width, self.hlthRct.get_rect().height))
+
+    def blit_hlth(self, dst: Surface):
+        dst.blit(self.hlthRct, (self.rect.centerx -
+                                self.hlthRct.get_rect().width*0.33, self.rect.top-self.rect.height*0.2))
 
     def update(self):
         ks = pyg.key.get_pressed()
@@ -117,11 +117,7 @@ class Player(Basic_role):
             self.rect.left = 0
         if self.rect.right > WIDTH:
             self.rect.right = WIDTH
-
-        # self.set_health_rect()
-        self.hlthRct.fill("white")
-
-        print(self.hlthRct.get_colorkey())
+        self.set_health_rect()
 
 
 def GoDie():
@@ -135,8 +131,6 @@ p1 = Player((50, 50), (255, 255, 255))
 Mxyd = Monster(xyd)
 Exit_butt = Button(40, "Exit button", "./sprites/Ubuntu-LI.ttf")
 Pause_butt = Button(40, "Pause button", "./sprites/Ubuntu-LI.ttf")
-# Pause_butt = Button(40, "Pause button", "AR PL UMing CN")
-# Exit_butt = Button(40, "Exit button", "AR PL UMing CN")
 p1.rect.y = HEIGHT-p1.rect.height
 p1.rect.x = WIDTH / 2
 Exit_butt.rect.x = WIDTH-Exit_butt.rect.width
@@ -159,16 +153,15 @@ while running:
                 running = False
             if not Died and Pause_butt.rect.collidepoint(mousePos):
                 Pause_butt.image = Pause_butt.ft.render(
-                    "Pause button"if Paused else "Resume button", True, "white", "black")
+                    "Pause button" if Paused else "Resume button", True, "white", "black")
                 Pause_butt.rect = Pause_butt.image.get_rect()
                 Paused = not Paused
     for i in range(0, HEIGHT+1):
         screen.fill((max(min((i+0)/HEIGHT*255*0.2+140, 255), 0), 255 - max(min((i+20)/HEIGHT*255*0.8, 255), 0), 255 - max(min((i+-200)/HEIGHT*255, 255), 0)),
                     rect.Rect(0, i, WIDTH, 1))
     plys.draw(screen)
-    # p1.blit_hlth(screen)
-    screen.blit(p1.hlthRct, (100, 100))
     mosts.draw(screen)
+    p1.blit_hlth(screen)
     enmys: list[Monster] = mosts.sprites()
     for enemies in enmys:
         enemies.blit_hlth(screen)
