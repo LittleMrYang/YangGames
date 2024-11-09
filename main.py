@@ -163,7 +163,7 @@ while running:
                 Pause_butt.rect = Pause_butt.image.get_rect()
                 Paused = not Paused
     for i in range(0, HEIGHT+1):
-        screen.fill((max(min((i+0)/HEIGHT*255*0.2+140, 255), 0), max(min((i+20)/HEIGHT*255*0.8, 255), 0), 255 - max(min((i+-200)/HEIGHT*255, 255), 0)),
+        screen.fill((max(min((i+0)/HEIGHT*255*0.2+140, 255), 0), 255 - max(min((i+20)/HEIGHT*255*0.8, 255), 0), 255 - max(min((i+-200)/HEIGHT*255, 255), 0)),
                     rect.Rect(0, i, WIDTH, 1))
     plys.draw(screen)
     # p1.blit_hlth(screen)
