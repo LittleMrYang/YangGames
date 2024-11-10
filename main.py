@@ -157,10 +157,19 @@ while running:
             if Exit_butt.rect.collidepoint(mousePos):
                 running = False
             if not Died and Pause_butt.rect.collidepoint(mousePos):
-                Pause_butt.image = Pause_butt.fnt.render(
-                    "Pause button" if Paused else "Resume button", True, "white", "black")
-                Pause_butt.rect = Pause_butt.image.get_rect()
                 Paused = not Paused
+            if Died and Pause_butt.rect.collidepoint(mousePos):
+                Died = False
+                Paused = False
+                p1.Health = 20
+    if not Died:
+        Pause_butt.image = Pause_butt.fnt.render(
+            "Pause button" if not Paused else "Resume button", True, "white", "black")
+        Pause_butt.rect = Pause_butt.image.get_rect()
+    else:
+        Pause_butt.image = Pause_butt.fnt.render(
+            "Restart button", True, "white", "black")
+        Pause_butt.rect = Pause_butt.image.get_rect()
     for i in range(0, HEIGHT+1):
         screen.fill((max(min((i+0)/HEIGHT*255*0.2+140, 255), 0), 255 - max(min((i+20)/HEIGHT*255*0.8, 255), 0), 255 - max(min((i+-200)/HEIGHT*255, 255), 0)),
                     rect.Rect(0, i, WIDTH, 1))
