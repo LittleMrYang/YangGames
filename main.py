@@ -126,7 +126,7 @@ class Player(pyg.sprite.Sprite):
 
 
 def GoDie():
-    dieTxt = font.SysFont("", 60, True).render(
+    dieTxt = font.Font("./sprites/Ubuntu-LI.ttf", 60).render(
         "Game over", True, "white", "black")
     screen.blit(dieTxt,
                 ((WIDTH-dieTxt.get_rect().width) / 2, (HEIGHT-dieTxt.get_rect().height)/2))
@@ -134,8 +134,8 @@ def GoDie():
 
 p1 = Player((50, 50), (255, 255, 255))
 Mxyd = Monster(xyd)
-Exit_butt = Button(40, "Exit button", "./sprites/Ubuntu-LI.ttf")
-Pause_butt = Button(40, "Pause button", "./sprites/Ubuntu-LI.ttf")
+Exit_butt = Button(50, "Exit button", "./sprites/Ubuntu-LI.ttf")
+Pause_butt = Button(50, "Pause button", "./sprites/Ubuntu-LI.ttf")
 p1.rect.y = HEIGHT-p1.rect.height
 p1.rect.x = WIDTH / 2
 Exit_butt.rect.x = WIDTH-Exit_butt.rect.width
