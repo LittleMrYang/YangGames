@@ -74,7 +74,7 @@ class Player(pyg.sprite.Sprite):
 
     def set_health_rect(self):
         self.hlthRct.fill((0, 0, 0))
-        self.hlthRct.fill((255-self.Health/self.MaxHealth*255, 220, 30), rect.Rect(
+        self.hlthRct.fill((255-self.Health/self.MaxHealth*200, min(self.Health/self.MaxHealth*255+10, 255), min(self.Health/self.MaxHealth*140, 100)), rect.Rect(
             0, 0, self.Health/self.MaxHealth*self.hlthRct.get_rect().width, self.hlthRct.get_rect().height))
 
     def blit_hlth(self, dst: Surface):
