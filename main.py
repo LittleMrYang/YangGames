@@ -21,8 +21,8 @@ xyd = transform.scale(xyd, (100, 100))
 class Button:
 
     def __init__(self, size: int, _text: str, _font: str) -> None:
-        self.ft = font.SysFont(_font, size)
-        self.image: Surface = self.ft.render(_text, True, "white", "black")
+        self.fnt = font.Font(_font, size)
+        self.image: Surface = self.fnt.render(_text, True, "white", "black")
         self.rect = self.image.get_rect()
 
 
@@ -134,8 +134,8 @@ def GoDie():
 
 p1 = Player((50, 50), (255, 255, 255))
 Mxyd = Monster(xyd)
-Exit_butt = Button(50, "Exit button", "./sprites/Ubuntu-LI.ttf")
-Pause_butt = Button(50, "Pause button", "./sprites/Ubuntu-LI.ttf")
+Exit_butt = Button(40, "Exit button", "./sprites/Ubuntu-LI.ttf")
+Pause_butt = Button(40, "Pause button", "./sprites/Ubuntu-LI.ttf")
 p1.rect.y = HEIGHT-p1.rect.height
 p1.rect.x = WIDTH / 2
 Exit_butt.rect.x = WIDTH-Exit_butt.rect.width
@@ -157,7 +157,7 @@ while running:
             if Exit_butt.rect.collidepoint(mousePos):
                 running = False
             if not Died and Pause_butt.rect.collidepoint(mousePos):
-                Pause_butt.image = Pause_butt.ft.render(
+                Pause_butt.image = Pause_butt.fnt.render(
                     "Pause button" if Paused else "Resume button", True, "white", "black")
                 Pause_butt.rect = Pause_butt.image.get_rect()
                 Paused = not Paused
