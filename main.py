@@ -132,22 +132,34 @@ def GoDie():
                 ((WIDTH-dieTxt.get_rect().width) / 2, (HEIGHT-dieTxt.get_rect().height)/2))
 
 
+def setGame():
+    global running, Paused, Died, p1, Mxyd
+    running = True
+    Paused = False
+    Died = False
+    p1.rect.y = HEIGHT-p1.rect.height
+    p1.rect.x = WIDTH / 2
+    p1.Health = p1.MaxHealth
+    Mxyd.rect.topleft = (0, 0)
+
+
 p1 = Player((50, 50), (255, 255, 255))
 Mxyd = Monster(xyd)
 Exit_butt = Button(40, "Exit button", "./sprites/Ubuntu-LI.ttf")
 Pause_butt = Button(40, "Pause button", "./sprites/Ubuntu-LI.ttf")
-p1.rect.y = HEIGHT-p1.rect.height
-p1.rect.x = WIDTH / 2
-Exit_butt.rect.x = WIDTH-Exit_butt.rect.width
+# p1.rect.y = HEIGHT-p1.rect.height
+# p1.rect.x = WIDTH / 2
+Exit_butt.rect.x = WIDTH - Exit_butt.rect.width
 Exit_butt.rect.y = 0
 Pause_butt.rect.x = 0
 Pause_butt.rect.y = 0
 plys = sprite.Group(p1)
 mosts = sprite.Group(Mxyd)
 
-running = True
-Paused = False
-Died = False
+# running = True
+# Paused = False
+# Died = False
+setGame()
 while running:
     for eve in pyg.event.get():
         if eve.type == pyg.QUIT:
@@ -159,9 +171,7 @@ while running:
             if not Died and Pause_butt.rect.collidepoint(mousePos):
                 Paused = not Paused
             if Died and Pause_butt.rect.collidepoint(mousePos):
-                Died = False
-                Paused = False
-                p1.Health = 20
+                setGame()
     if not Died:
         Pause_butt.image = Pause_butt.fnt.render(
             "Pause button" if not Paused else "Resume button", True, "white", "black")
